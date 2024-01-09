@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 05, 2023 at 12:41 PM
+-- Generation Time: Jan 09, 2024 at 06:27 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 7.4.30
 
@@ -32,8 +32,16 @@ CREATE TABLE `invoice` (
   `userid` int(11) NOT NULL,
   `invoice` text NOT NULL,
   `mPembayaran` varchar(255) NOT NULL,
+  `total` varchar(255) NOT NULL,
   `status` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `invoice`
+--
+
+INSERT INTO `invoice` (`id`, `userid`, `invoice`, `mPembayaran`, `total`, `status`) VALUES
+(1, 2, '20240109053839', 'COD', '250000', 'Belum Upload Bukti Tranfer');
 
 -- --------------------------------------------------------
 
@@ -43,11 +51,19 @@ CREATE TABLE `invoice` (
 
 CREATE TABLE `invoicedetail` (
   `id` int(11) NOT NULL,
-  `invoiceid` varchar(255) NOT NULL,
+  `invoice` varchar(255) NOT NULL,
   `produkid` int(11) NOT NULL,
   `qty` varchar(255) NOT NULL,
-  `total` varchar(255) NOT NULL
+  `harga` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `invoicedetail`
+--
+
+INSERT INTO `invoicedetail` (`id`, `invoice`, `produkid`, `qty`, `harga`) VALUES
+(1, '20240109053839', 4, '2', '50000'),
+(2, '20240109053839', 1, '1', '150000');
 
 -- --------------------------------------------------------
 
@@ -66,7 +82,16 @@ CREATE TABLE `kategori` (
 
 INSERT INTO `kategori` (`id`, `nama`) VALUES
 (1, 'Baju'),
-(2, 'Celana');
+(2, 'Celana'),
+(4, 'Kemeja'),
+(5, 'TV'),
+(6, 'Headset'),
+(7, 'Handphone'),
+(8, 'tes 1'),
+(9, 'tes 2'),
+(10, 'tes 3'),
+(11, 'tes 4'),
+(12, 'tes 5');
 
 -- --------------------------------------------------------
 
@@ -79,7 +104,7 @@ CREATE TABLE `keranjang` (
   `userid` int(11) NOT NULL,
   `produkid` int(11) NOT NULL,
   `qty` varchar(255) NOT NULL,
-  `total` varchar(255) NOT NULL
+  `harga` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -95,7 +120,7 @@ CREATE TABLE `produk` (
   `harga` varchar(255) NOT NULL,
   `keterangan` text NOT NULL,
   `gambar` text NOT NULL,
-  `tanggal` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `tanggal` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -103,7 +128,8 @@ CREATE TABLE `produk` (
 --
 
 INSERT INTO `produk` (`id`, `kategoriid`, `nama`, `harga`, `keterangan`, `gambar`, `tanggal`) VALUES
-(1, 1, 'baju pria', '150000', 'bagus', '27112023124806laravel-10-vite-768x576.png', '2023-11-27 00:00:00');
+(1, 2, 'celana', '150000', 'bagus', '27112023124806laravel-10-vite-768x576.png', '2023-11-27'),
+(4, 4, 'kemeja bagus', '50000', 'kemeja sangat bagus', '111220230928521000011737.jpg', '2023-12-11');
 
 -- --------------------------------------------------------
 
@@ -177,37 +203,37 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `invoice`
 --
 ALTER TABLE `invoice`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `invoicedetail`
 --
 ALTER TABLE `invoicedetail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `keranjang`
 --
 ALTER TABLE `keranjang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
